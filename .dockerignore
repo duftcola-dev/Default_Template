@@ -1,0 +1,7 @@
+.pytest_cache/
+venv/
+docker/
+app.egg-info 
+__pycache__/
+.coverage
+.pychace
