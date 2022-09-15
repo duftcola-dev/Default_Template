@@ -10,7 +10,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v3
         - name: Moving test images docker/testing --> .
-        - run: mv docker/production/.dockerignore . ; mv docker/production/dockerfile .
+          run: mv docker/production/.dockerignore . ; mv docker/production/dockerfile .
         - name: Build
           run: docker build -t duftcola/testing .
         - name: Moving test images back . ---> docker/testing
