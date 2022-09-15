@@ -1,0 +1,10 @@
+.pytest_cache/
+venv/
+docker/
+doc/
+Makefile
+app.egg-info 
+__pycache__/
+.coverage
+.pychace
+.gitignore

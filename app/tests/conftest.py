@@ -1,4 +1,4 @@
-from app import App
+from ..App import *
 import pytest
 
 

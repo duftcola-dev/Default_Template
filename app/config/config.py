@@ -28,8 +28,8 @@ class AppConfig:
             values = dotenv_values(self.path+"/develop/.env")
         if app.config["ENV"] == "production":
             values = dotenv_values(self.path+"/production/.env")
-        if app.config["ENV"] == "test":
-            values = dotenv_values(self.path+"/test/.env")
+        if app.config["ENV"] == "testing":
+            values = dotenv_values(self.path+"/testing/.env")
         app.config.from_mapping(values)
         return app
 

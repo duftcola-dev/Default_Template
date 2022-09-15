@@ -1,6 +1,6 @@
-from tests.utils import basic
+from .utils.basic import *
 
 def test_app_status(client):
     response = client.get("/")
-    basic.check_200(response)
+    check_200(response)
 
