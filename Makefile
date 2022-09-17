@@ -10,20 +10,38 @@ tag:=latest
 
 # Build local venv 
 # Installs required deppendencies
-install:
+install: venv requirements list
+	echo "Installation completed"
 
+# Create a venv
+venv:
 	python -m venv venv
-	. venv/bin/activate ; pip install -r  ./requirements/requirements.txt
-	. venv/bin/activate ; pip freeze > app/requirements/requirements.txt
-	. venv/bin/activate ; pip list > app/requirements/list.txt
 
-# Launch application in local using venv
-develop_local:
+# Install requirements
+requirements:
+	. venv/bin/activate ; pip install -r  ./requirements/requirements.txt
+
+# List deppendencies and requirements
+list:
+	. venv/bin/activate ; pip freeze > project/requirements/requirements.txt
+	. venv/bin/activate ; pip list > project/requirements/list.txt
+
+#--------------------------------------------------------------------------------
+
+# Launch application in development mode using the venv
+develop:
+	echo "Running in local using venv"
 	. venv/bin/activate ; export FLASK_APP=app 
 	. venv/bin/activate ; export ENV=develop 
-	. flask --app main
+	flask --app main run
 
-# Launch test in local using venv
+# Launch application in production mode using the venv
+production:
+	. venv/bin/activate ; export FLASK_APP=app 
+	. venv/bin/activate ; export ENV=production 
+	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e FLASK_DEBUG=production main:app
+
+# LLaunch the application in test mode using the venv
 test_local:
 	. venv/bin/activate ; coverage run -m pytest
 	. venv/bin/activate ; coverage report -m
@@ -31,31 +49,40 @@ test_local:
 	. venv/bin/activate ; coverage html -d ./doc/html/
 	google-chrome ./doc/html/index.html
 
-# Launches the application in a docker images
+#----------------------------------------------------------------------------------------
+
+# Launches the application in development mode using docker
 develop_docker:
 	docker run -td -p 3000:3000 --name $(user)_$(development)  $(user)/$(development)
 
-# Launch test application in docker images
+# Launches the application in test mode using docker
 test_docker:
 	docker run -d -p 3000:3000 -e CI=true --name $(user)_$(testing)  $(user)/$(testing)
 	docker exec -it $(user)_$(testing) pytest app/tests/
 	docker stop $(user)_$(testing)
 	docker rm $(user)_$(testing)
 
-# Stop test and develop containers
+# Launches the application in production mode using docker
+production_docker:
+	docker run -td -p 3000:3000 --name $(user)_$(production)  $(user)/$(production)
+
+#------------------------------------------------------------------------------------------
+
+# Stop containers
 # Forces shut down on gunicorn
 stop:
-
+	- docker stop $(user)_$(production)
 	- docker stop $(user)_$(development)
 	- docker stop $(user)_$(testing)
 	- pkill -f gunicorn
 
-
 # Delete all images and containers
 flush:
-
 	- docker stop $(user)_$(development)
 	- docker stop $(user)_$(testing)
+	- docker stop $(user)_$(production)
+
+	- docker rm $(user)_$(production)
 	- docker rm $(user)_$(development)
 	- docker rm $(user)_$(testing)
 
@@ -63,14 +90,21 @@ flush:
 	- docker rmi $(user)/$(development):$(tag)
 	- docker rmi $(user)/$(testing):$(tag)
 	
+#---------------------------------------------------------------------------------------
 
-# Start the develop container without buidding a new one
+# Start containers already built
+start_production:
+	docker start $(user)_$(production)
+
 start_develop:
 	docker start $(user)_$(development)
 
+start_testing:
+	docker start $(user)_$(testing)
 
+#----------------------------------------------------------------------------------------
 
-# will build :
+# Builts images and containers
 # - develop image
 # - production image
 # - test image
@@ -105,13 +139,13 @@ build_test:
 
 
 
-database : 
+# database : 
 
-	- sqlite3 ./app/database/test-db.db  ".read ./app/database/test-init.sql"
+# 	- sqlite3 ./app/database/test-db.db  ".read ./app/database/test-init.sql"
 
-console:
+# console:
 
-	- sqlite3 ./app/database/test-db.db
+# 	- sqlite3 ./app/database/test-db.db
 
 	
 	
