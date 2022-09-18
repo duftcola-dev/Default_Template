@@ -2,10 +2,7 @@
     Flask default template.
 
 # Description :
-    Configuration and cli handler module.
-    Its main function is to keep track of the processes made by the cli and display
-    the available options to build projects.
-    This project is originally conceived to be used in other projects with Flask.
+    Default template for small applications and microservices.
 ## Author:
     Robin Viera
 ## Email:
@@ -19,10 +16,6 @@
     - Docker-compose [optional]
 ## Platform :
     Linux Ubuntu Focal
-
-## DESCRIPTION :
-
-    Default template for quick development of microservices and small applications
 
 ## DEVELOPMENT
 
