@@ -10,16 +10,20 @@ tag:=latest
 
 # Build local venv 
 # Installs required deppendencies
-install: venv requirements list
+install: venv clients requirements list
 	echo "Installation completed"
 
 # Create a venv
 venv:
 	python -m venv venv
 
+# Clients necessary for databases like Mysql
+clients:
+	. venv/bin/activate ; sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+
 # Install requirements
 requirements:
-	. venv/bin/activate ; pip install -r  ./requirements/requirements.txt
+	. venv/bin/activate ; pip install -r  ./project/requirements/requirements.txt --upgrade pip
 
 # List deppendencies and requirements
 list:
@@ -137,17 +141,22 @@ build_test:
 	mv .dockerignore docker/testing/
 	mv dockerfile docker/testing/
 
+#------------------------------------------------------------------------------------------------------
 
+# Creates your database from an init file
+init_database:
+	- sqlite3 ./project/database/my_database.db  ".read ./project/database/init.sql"
+# Creates a database for testing puposes
+init_test_database:
+	- sqlite3 ./project/database/test-db.db  ".read ./project/database/test-init.sql"	
 
-# database : 
+console:
+	- sqlite3 ./project/database/my_database.db
 
-# 	- sqlite3 ./app/database/test-db.db  ".read ./app/database/test-init.sql"
-
-# console:
-
-# 	- sqlite3 ./app/database/test-db.db
-
+test_console:
+	- sqlite3 ./project/database/test-db.db
 	
+
 	
 
 

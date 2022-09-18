@@ -1,5 +1,5 @@
 from flask import Flask
-from .applications.status.routes import bp as app_status_bp
+from .applications.example.routes import bp as app_status_bp
 
 class AppRouter:
 

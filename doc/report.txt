@@ -1,0 +1,18 @@
+Name                                                                  Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------------------------------
+project/__init__.py                                                       0      0   100%
+project/app.py                                                           25      0   100%
+project/applications/example/forms.py                                     5      0   100%
+project/applications/example/models/request_models/example_model.py       4      0   100%
+project/applications/example/routes.py                                   32      4    88%   16-18, 43
+project/config/config.py                                                 27      2    93%   28, 30
+project/router.py                                                         8      0   100%
+project/tests/__init__.py                                                 0      0   100%
+project/tests/conftest.py                                                 9      0   100%
+project/tests/status_codes.py                                            24     16    33%   4, 7-9, 12-14, 17-19, 22-24, 27-29
+project/tests/test_app_example.py                                        16      0   100%
+project/tests/test_app_validator.py                                      66      0   100%
+project/tests/test_factory.py                                             3      0   100%
+project/validator.py                                                     36      8    78%   13, 16-17, 20, 72-73, 94-95
+---------------------------------------------------------------------------------------------------
+TOTAL                                                                   255     30    88%
