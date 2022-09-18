@@ -2,6 +2,7 @@ from flask import Flask,request,current_app
 from .router import AppRouter
 from .config.config import AppConfig
 from .validator import AppValidator
+from .handlers import AppHandler
 from datetime import datetime
 
 class App:
@@ -33,4 +34,5 @@ class App:
         app = AppRouter().init_app(app)  
         app = AppConfig().init_app(app)
         app = AppValidator().init_app(app)
+        app = AppHandler().init_app(app)
         return app
