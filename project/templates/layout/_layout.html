@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
     <title>Document</title>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+                {%if category == 'ok' %}
+                    <li style="color:rgba(55, 228, 2, 0.918)">{{ message }}</li>
+                {% endif %}
+                {%if category== 'alert' %}
+                    <li style="color:rgb(255, 17, 0)">{{ message }}</li>
+                {% endif %}
+                {%if category== 'info' %}
+                    <li style="color:rgb(139, 176, 255)">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
 </head>
 <body>
     <div>

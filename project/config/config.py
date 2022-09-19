@@ -10,7 +10,7 @@ class AppConfig:
         pass
 
     def init_app(self,app:Flask)->Flask:
-        self.path=os.getcwd()+"/app/config"
+        self.path=basedir
         app = self.__set_configuration(app)
         app = self.__set_gunicorn_logger(app)
         return app
@@ -24,11 +24,12 @@ class AppConfig:
         Returns:
             Flask: Flask class instance
         """
-        if app.config["ENV"] == "development":
+        values={}
+        if os.environ.get("ENV") == "development":
             values = dotenv_values(self.path+"/develop/.env")
-        if app.config["ENV"] == "production":
+        if os.environ.get("ENV") == "production":
             values = dotenv_values(self.path+"/production/.env")
-        if app.config["ENV"] == "testing":
+        if os.environ.get("ENV") == "testing":
             values = dotenv_values(self.path+"/testing/.env")
         app.config.from_mapping(values)
         return app

@@ -35,15 +35,17 @@ list:
 # Launch application in development mode using the venv
 develop:
 	echo "Running in local using venv"
-	. venv/bin/activate ; export FLASK_APP=app 
-	. venv/bin/activate ; export ENV=develop 
+	. venv/bin/activate ;\
+	export FLASK_APP=app;\
+	export FLASK_DEBUG=true;\
+	export ENV=development;\
 	flask --app main run
 
 # Launch application in production mode using the venv
 production:
-	. venv/bin/activate ; export FLASK_APP=app 
-	. venv/bin/activate ; export ENV=production 
-	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e FLASK_DEBUG=production main:app
+	. venv/bin/activate ;\
+	export FLASK_APP=app;\
+	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e ENV=production main:app
 
 # LLaunch the application in test mode using the venv
 test_local:
