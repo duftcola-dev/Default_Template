@@ -4,4 +4,4 @@ WORKDIR /.
 COPY . . 
 RUN pip install -r ./project/requirements/requirements.txt  --upgrade pip
 EXPOSE 3000
-CMD ["gunicorn","-w 4","-b 0.0.0.0:3000","--reload","-e FLASK_DEBUG=production","main:app"]
+CMD ["gunicorn","-w 4","-b 0.0.0.0:3000","--reload","-e ENV=production","main:app"]

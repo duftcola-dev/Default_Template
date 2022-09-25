@@ -1,7 +1,7 @@
 # GLOBALS 
 
 user:=duftcola
-production:=cv_flask
+production:=production
 development:=development
 testing:=testing
 tag:=latest
@@ -19,7 +19,8 @@ venv:
 
 # Clients necessary for databases like Mysql
 clients:
-	. venv/bin/activate ; sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+	sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+	sudo apt install libpq-dev python3-dev
 
 # Install requirements
 requirements:
@@ -36,13 +37,13 @@ list:
 develop:
 	. venv/bin/activate ;\
 	export FLASK_APP=main;\
-	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e ENV=development main:app
+	gunicorn -w 4 -b 0.0.0.0:3000 --reload -e ENV=development main:app
 
 # Launch application in production mode using the venv
 production:
 	. venv/bin/activate ;\
 	export FLASK_APP=main;\
-	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e ENV=production main:app
+	gunicorn -w 4 -b 0.0.0.0:3000 --reload -e ENV=production main:app
 
 # Launch the application in test mode using the venv
 test:
@@ -61,7 +62,7 @@ develop_docker:
 # Launches the application in test mode using docker
 test_docker:
 	docker run -d -p 3000:3000 -e CI=true --name $(user)_$(testing)  $(user)/$(testing)
-	docker exec -it $(user)_$(testing) pytest app/tests/
+	docker exec -it -e ENV=testing $(user)_$(testing) pytest project/tests
 	docker stop $(user)_$(testing)
 	docker rm $(user)_$(testing)
 
