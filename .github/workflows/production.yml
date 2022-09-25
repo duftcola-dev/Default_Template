@@ -1,10 +1,10 @@
-name: Testing app_template module 
+name: Production ready 
 
 on:
     pull_request:
         branches: ["master"]
 jobs:
-  testing:
+  clean_up:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
@@ -15,8 +15,5 @@ jobs:
           run: rm ./project/tests/test_app_validator.py
         - name: Delete tests 3
           run: rm ./project/tests/status_codes.py
-        - name: Delete doc
-          run: rm ./project/doc/report.txt
-        - name: Delete doc_html
-          run: rm -D ./project/html/
+
         
