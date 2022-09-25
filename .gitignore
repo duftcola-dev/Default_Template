@@ -5,3 +5,5 @@ venv/
 production/.env
 __pycache__/
 htmlcov/
+doc/html/*
+report.txt

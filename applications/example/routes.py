@@ -1,18 +1,4 @@
-import os
-from flask import (
-    Blueprint,
-    request,
-    make_response,
-    render_template,
-    current_app,
-    session,
-    redirect,
-    url_for,
-    flash
-)
-
-from .forms import ExampleForm
-from .models.request_models.example_model import Example
+from ..deppendencies import *
 bp = Blueprint("example",__name__,url_prefix="/")
 
 

@@ -1,6 +1,5 @@
 from ..validator import *
 from typing import Tuple
-import json
 
 v = Validator()
 
