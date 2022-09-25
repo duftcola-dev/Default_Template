@@ -1,4 +1,4 @@
-from ..deppendencies import *
+from deppendencies import *
 bp = Blueprint("example",__name__,url_prefix="/")
 
 
