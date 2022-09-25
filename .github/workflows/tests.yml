@@ -10,12 +10,12 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v3
         - name: Moving test images docker/testing --> .
-          run: mv docker/production/.dockerignore . ; mv docker/production/dockerfile .
+          run: mv docker/development/.dockerignore . ; mv docker/development/dockerfile .
         - name: Build
-          run: docker build -t duftcola/testing .
-        - name: Moving test images back . ---> docker/testing
-          run: mv .dockerignore docker/production/ ; mv dockerfile docker/production/
+          run: docker build -t duftcola/development .
+        - name: Moving development image back . ---> docker/development
+          run: mv .dockerignore docker/development/.dockerignore ; mv dockerfile docker/production/dockerfile
         - name: Running docker image
-          run: docker run -d -p 3000:3000 -e CI=true --name duftcola_testing duftcola/testing 
+          run: docker run -d -p 3000:3000 -e CI=true --name duftcola_development_container duftcola/development 
         - name: Executing tests
-          run: docker exec duftcola_testing pytest app/tests/
+          run: docker exec duftcola_development_container export ENV=testing ; coverage run -m pytest
