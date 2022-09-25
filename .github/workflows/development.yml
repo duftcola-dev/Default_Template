@@ -18,4 +18,4 @@ jobs:
         - name: Running docker image
           run: docker run -d -p 3000:3000 -e CI=true -e ENV=testing --name duftcola_development_container duftcola/development 
         - name: Executing tests
-          run: docker exec duftcola_development_container export ENV=testing ; coverage run -m pytest
+          run: docker exec duftcola_development_container coverage run -m pytest
