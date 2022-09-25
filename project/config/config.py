@@ -1,8 +1,11 @@
+import pathlib
 import os
 import logging
 from flask import Flask
 from dotenv import dotenv_values
-basedir = os.path.abspath(os.path.dirname(__file__))
+ROOT=str(pathlib.Path(__file__).resolve().parent.parent)
+CONFIG=str(pathlib.Path(__file__).resolve().parent)
+ENV=os.environ.get("ENV")
 
 class AppConfig:
 
@@ -10,7 +13,6 @@ class AppConfig:
         pass
 
     def init_app(self,app:Flask)->Flask:
-        self.path=os.getcwd()+"/app/config"
         app = self.__set_configuration(app)
         app = self.__set_gunicorn_logger(app)
         return app
@@ -24,13 +26,16 @@ class AppConfig:
         Returns:
             Flask: Flask class instance
         """
-        if app.config["ENV"] == "development":
-            values = dotenv_values(self.path+"/develop/.env")
-        if app.config["ENV"] == "production":
-            values = dotenv_values(self.path+"/production/.env")
-        if app.config["ENV"] == "testing":
-            values = dotenv_values(self.path+"/testing/.env")
+        values={}
+        if ENV == "development":
+            values = dotenv_values(CONFIG+"/develop/.env")
+        if ENV == "production":
+            values = dotenv_values(CONFIG+"/production/.env")
+        if ENV == "testing" or app.testing==True:
+            values = dotenv_values(CONFIG+"/testing/.env")
         app.config.from_mapping(values)
+        app.template_folder=ROOT+"/"+values["TEMPLATE_FOLDER"]
+        app.static_folder=ROOT+"/"+values["STATIC_FOLDER"]
         return app
 
 

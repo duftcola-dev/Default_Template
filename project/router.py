@@ -1,17 +1,15 @@
 from flask import Flask
-from .applications.example.routes import bp as app_status_bp
-
 class AppRouter:
 
     def __init__(self) -> None:
         pass
         
-    def init_app(self,app:Flask):
+    def init_app(self,app:Flask,routes:list):
         """Register app blueprints and  endpoints
 
         Args:
             app (Flask): Flask class instance
         """
-        
-        app.register_blueprint(app_status_bp)
+        for route in routes:
+            app.register_blueprint(route)
         return app

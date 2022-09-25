@@ -2,7 +2,7 @@ FROM python:3.8.10
 
 WORKDIR /.
 COPY . .
-RUN pip install -r ./app/requirements/requirements.txt  --upgrade pip
+RUN pip install -r ./project/requirements/requirements.txt  --upgrade pip
 EXPOSE 3000
 RUN export ENV=testing
 RUN export FLASK_DEBUG=testing

@@ -34,24 +34,23 @@ list:
 
 # Launch application in development mode using the venv
 develop:
-	echo "Running in local using venv"
-	. venv/bin/activate ; export FLASK_APP=app 
-	. venv/bin/activate ; export ENV=develop 
-	flask --app main run
+	. venv/bin/activate ;\
+	export FLASK_APP=main;\
+	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e ENV=development main:app
 
 # Launch application in production mode using the venv
 production:
-	. venv/bin/activate ; export FLASK_APP=app 
-	. venv/bin/activate ; export ENV=production 
-	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e FLASK_DEBUG=production main:app
+	. venv/bin/activate ;\
+	export FLASK_APP=main;\
+	gunicorn -w 4 -b 0.0.0.0:5000 --reload -e ENV=production main:app
 
-# LLaunch the application in test mode using the venv
-test_local:
-	. venv/bin/activate ; coverage run -m pytest
+# Launch the application in test mode using the venv
+test:
+	. venv/bin/activate ; export ENV=testing; coverage run -m pytest
 	. venv/bin/activate ; coverage report -m
-	. venv/bin/activate ; coverage report -m > doc/report.txt
-	. venv/bin/activate ; coverage html -d ./doc/html/
-	google-chrome ./doc/html/index.html
+	. venv/bin/activate ; coverage report -m > project/doc/report.txt
+	. venv/bin/activate ; coverage html -d ./project/doc/html/
+	google-chrome ./project/doc/html/index.html
 
 #----------------------------------------------------------------------------------------
 

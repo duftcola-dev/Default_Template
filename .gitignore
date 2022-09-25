@@ -2,5 +2,8 @@ venv/
 .pyc
 .pytest_cache
 .pytest_cache/
+production/.env
 __pycache__/
 htmlcov/
+doc/html/*
+report.txt

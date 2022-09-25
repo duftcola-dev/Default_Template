@@ -1,4 +1,6 @@
 
 def test_factory(app):
-    print("Testing ")
-    assert app != None
+    assert app is not None
+    assert app.config["SECRET_KEY"] is not None 
+    assert app.secret_key is not None
+
